@@ -26,11 +26,13 @@ mysql = MySQL(app)
 @app.route('/', methods=['GET', 'POST'])
 def root():
     if request.method == 'GET':
+        # Check if user has logged in.
         if session and session['username']:
             return render_template("registered.j2", username = session['username'])
         else:
             return render_template("register.j2")
-        
+    
+    # Receive POST request.  
     msg = ''
     returnCode = '002'
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'state' in request.form :
@@ -83,11 +85,15 @@ def root():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        # Check if user has logged in.
         if session and session['username']:
+            # Display account infomration.
             return redirect("account")
         else:
+            # Display login page.
             return render_template("login.j2")
-        
+    
+    # Receive post request.    
     msg = ''
     returnCode = '002'
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form:
@@ -127,6 +133,7 @@ def login():
 
 @app.route('/daily')
 def daily_weather():
+    # Check if user has logged in.
     if session and session['username']:
         username = session['username']
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -143,10 +150,13 @@ def daily_weather():
 
 @app.route('/help')
 def help():
+    # Display the page of help.
     return render_template("help.j2")
+
 
 @app.route('/geocoding' , methods=['POST'])
 def geo():
+    # The route send POST request to OpenWeahter API.
     data = request.json
     if 'zip' in data.keys():
         url = "https://api.openweathermap.org/data/2.5/weather?zip="+data['zip']+"&appid="+data['appID']+'&units=metric'
@@ -156,8 +166,8 @@ def geo():
     response = urllib.request.urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
     data = response.read()
     print(data)
-    
     return data
+
 
 @app.route('/logout')
 def logout():
@@ -165,19 +175,23 @@ def logout():
     session.pop('username', None)
     return redirect("login")
 
+
 @app.route('/account', methods=['GET', 'POST'])
 def account():
     if request.method == 'GET':
+        # Check if user has logged in.
         if session and session['username']:
             username = session['username']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute('SELECT * FROM accounts WHERE username = % s', (username, ))
             account = cursor.fetchone()
             if account:
+                # If logged in render account information.
                 return render_template("account.j2", account = account)
             else:
                 return redirect("login")
         else:
+            # If has not logged in render login page.
             return redirect("login")
     
     msg = ''
