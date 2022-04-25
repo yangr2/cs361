@@ -1,6 +1,6 @@
 from flask import Flask, render_template, json, request, session, redirect
 from flask_mysqldb import MySQL
-from database import MYSQL_PASSWORD
+from database import MYSQL_PASSWORD, SECRET_KEY
 import hashlib
 import os   
 import MySQLdb.cursors
@@ -13,7 +13,7 @@ import ssl
 # Configuration
 app = Flask(__name__)
 
-app.secret_key = '1122334455'
+app.secret_key = SECRET_KEY
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
