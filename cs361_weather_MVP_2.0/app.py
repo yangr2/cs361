@@ -8,6 +8,7 @@ import re
 import urllib.request, json
 import certifi
 import ssl
+import requests
 
 
 # Configuration
@@ -130,7 +131,6 @@ def login():
         return render_template("login.j2", msg = msg)
     
 
-
 @app.route('/daily')
 def daily_weather():
     # Check if user has logged in.
@@ -146,7 +146,6 @@ def daily_weather():
     else: 
         return render_template("daily.j2", account = {})
             
-
 
 @app.route('/help')
 def help():
@@ -165,8 +164,21 @@ def geo():
     
     response = urllib.request.urlopen(url, context=ssl.create_default_context(cafile=certifi.where()))
     data = response.read()
-    print(data)
-    return data
+    
+    # Send a POST request to the microservice for simplified.
+    req = urllib.request.Request("https://cs361-jsonsimplify.wl.r.appspot.com/post_raw_data", method="POST")
+    req.add_header('Content-Type', 'application/json')
+    r = urllib.request.urlopen(req, data=data)
+    content = r.read()
+    data2 = json.loads(content.decode())
+    
+    # Send a GET request to the microservice to get the data after simplified.  
+    req = urllib.request.Request("https://cs361-jsonsimplify.wl.r.appspot.com/weather/"+data2['name'], method="GET")
+    #req.add_header('Content-Type', 'application/json')
+    r = urllib.request.urlopen(req)
+    content = r.read()
+    print(content.decode())  
+    return content.decode()
 
 
 @app.route('/logout')
@@ -255,5 +267,5 @@ def account():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 8081))
+    port = int(os.environ.get('PORT', 8080))
     app.run(port=port, debug=True)

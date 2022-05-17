@@ -28,7 +28,7 @@
                 <i class="fas fa-bars"></i>
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav nav_text">
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Register</a>
                   </li>
@@ -52,10 +52,11 @@
               </div>
             {% endif %}
             <h1>Welcome to CS361 Weather</h1>
-            <p>
-                Users can search for current weather info on the page Daily Weather.
+            <p id="register_desc">
+                
             </p>
             <p class="description">
+                Users can search for current weather info on the page Daily Weather. 
                 Becoming a registered user is able to see current weather data displayed on the Daily weather page automatically.
             </p>
             <section class="vh-100 bg-image mt-4 mb-5">
@@ -70,6 +71,7 @@
                               <div class="form-outline mb-4">
                                 <label class="form-label" for="form3Example1cg">User Name</label>
                                 <input type="text" id="form3Example1cg" class="form-control form-control-lg" name="username" required>
+                                <p>Username must contain only characters and numbers.</p>
                               </div>
               
                               <div class="form-outline mb-4">
@@ -151,14 +153,14 @@
                               </div>
               
                               <div class="d-flex justify-content-center">
-                                <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="register">Register</button>
+                                <button type="submit" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body all_btn" id="register">Register</button>
                               </div>
               
                             </form>
               
                           </div>
                         </div>
-                        <p class="text-center text-muted mt-3 mb-3 mb-0">Have already an account? Click <a href="login">HERE</a> to login.</p>
+                        <p class="foot-note text-center text-muted mt-3 mb-3 mb-0">Have already an account? Click <a href="login">HERE</a> to login.</p>
                       </div>
                     </div>
                   </div>

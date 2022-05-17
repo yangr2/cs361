@@ -13,11 +13,8 @@ function onSubmit(){
         zip = zipInput.value.trim();
         getDataByZip(state,zip,appID);
     }
-
-    
-
-
 }
+
 
 function getDataByCity(state,city,appID){
     const data = {city: city, state: state, appID: appID};
@@ -30,7 +27,7 @@ function getDataByCity(state,city,appID){
     })
     .then(response => response.json())
     .then(data => {
-        const { main, name, sys, weather } = data;
+        const { temp, city, country, weather } = data;
         const list = document.querySelector(".ajax-section .cities");
         const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${
           weather[0]["icon"]
@@ -39,11 +36,11 @@ function getDataByCity(state,city,appID){
         const li = document.createElement("li");
         li.classList.add("city");
         const markup = `
-          <h2 class="city-name" data-name="${name},${sys.country}">
-            <span>${name}</span>
-            <sup>${sys.country}</sup>
+          <h2 class="city-name" data-name="${city},${country}">
+            <span>${city}</span>
+            <sup>${country}</sup>
           </h2>
-          <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
+          <div class="city-temp">${Math.round(temp)}<sup>°C</sup></div>
           <figure>
             <img class="city-icon" src="${icon}" alt="${
           weather[0]["description"]
@@ -60,6 +57,7 @@ function getDataByCity(state,city,appID){
     });
 }
 
+
 function getDataByZip(state,zip,appID){
     const data = {zip:zip, state: state, appID: appID};
     fetch('geocoding', {
@@ -71,35 +69,36 @@ function getDataByZip(state,zip,appID){
     })
     .then(response => response.json())
     .then(data => {
-        const { main, name, sys, weather, wind  } = data;
-        const list = document.querySelector(".ajax-section .cities");
-        const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${
-          weather[0]["icon"]
-        }.svg`;
-  
-        const li = document.createElement("li");
-        li.classList.add("city");
-        const markup = `
-          <h2 class="city-name" data-name="${name},${sys.country}">
-            <span>${name}</span>
-            <sup>${sys.country}</sup>
-          </h2>
-          <div class="city-temp">${Math.round(main.temp)}<sup>°C</sup></div>
-          <figure>
-            <img class="city-icon" src="${icon}" alt="${
-          weather[0]["description"]
-        }">
-            <figcaption>${weather[0]["description"]}</figcaption>
-          </figure>
-        `;
-        li.innerHTML = markup;
-        list.innerHTML = '';
-        list.appendChild(li);
-      })
-    .catch((error) => {
-        console.error('Error:', error);
-    });
+      const { temp, city, country, weather } = data;
+      const list = document.querySelector(".ajax-section .cities");
+      const icon = `https://s3-us-west-2.amazonaws.com/s.cdpn.io/162656/${
+        weather[0]["icon"]
+      }.svg`;
+
+      const li = document.createElement("li");
+      li.classList.add("city");
+      const markup = `
+        <h2 class="city-name" data-name="${city},${country}">
+          <span>${city}</span>
+          <sup>${country}</sup>
+        </h2>
+        <div class="city-temp">${Math.round(temp)}<sup>°C</sup></div>
+        <figure>
+          <img class="city-icon" src="${icon}" alt="${
+        weather[0]["description"]
+      }">
+          <figcaption>${weather[0]["description"]}</figcaption>
+        </figure>
+      `;
+      li.innerHTML = markup;
+      list.innerHTML = '';
+      list.appendChild(li);
+    })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
 }
+
 
 const submit = document.getElementById('search');
 submit.addEventListener('click', onSubmit);

@@ -28,7 +28,7 @@
                 <i class="fas fa-bars"></i>
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav nav_text">
                   <li class="nav-item">
                     <a class="nav-link" href="/">Register</a>
                   </li>
@@ -48,9 +48,7 @@
         <div class="main">
             <h1>Daily Weather</h1>
             <p class="description">
-                Enter keywords to search for current weather.
-            </p>
-            <p class="description">
+                Enter keywords to search for current weather.</br>
                 Becoming a registered user is able to see current weather data displayed on the Daily weather page automatically.
             </p>
             <section class="vh-100 bg-image mt-4 mb-5">
@@ -136,37 +134,16 @@
                                       <option {%if account and account.state == 'Wyoming' %} selected {% endif%} value="Wyoming">Wyoming</option>
                                     </select>   
                                 </div>
-
-                                <div class="form-outline mb-4">
-                                    <input class="form-check-input" type="checkbox" value="true" id="checkPrecipitation" name="checkPrecipitation">
-                                    <label class="form-label" for="checkPrecipitation">Include precipitation</label>
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input class="form-check-input" type="checkbox" value="true" id="checkAirQuality" name="checkAirQuality">
-                                    <label class="form-label" for="checkAirQuality">Include air quality index</label>
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input class="form-check-input" type="checkbox" value="true" id="checkWind" name="checkWind">
-                                    <label class="form-label" for="checkWind">Include info on the wind</label>
-                                </div>
-
-                                <div class="form-outline mb-4">
-                                    <input class="form-check-input" type="checkbox" value="true" id="checkSun" name="checkSun">
-                                    <label class="form-label" for="checkSun">Include sunset time and sunrise time</label>
-                                </div>
-                                
                 
                                 <div class="d-flex justify-content-center">
-                                    <button type="button" class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="search">Search</button>
+                                    <button type="button" class="all_btn btn btn-success btn-block btn-lg gradient-custom-4 text-body" id="search">Search</button>
                                 </div>
             
                             </form>
               
                           </div>
                         </div>
-                        <section class="mt-5 mb-5 ajax-section">
+                        <section class="mt-2 mb-2 ajax-section">
                           <div class="container">
                             <ul class="cities"></ul>
                           </div>
